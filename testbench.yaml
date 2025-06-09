@@ -1,0 +1,28 @@
+providers:
+  - Laravel\Nova\NovaServiceProvider
+  - Laravel\Nova\NovaCoreServiceProvider
+  - App\Providers\NovaServiceProvider
+  - App\Providers\WorkbenchServiceProvider
+
+migrations:
+  - workbench/database/migrations
+
+workbench:
+  start: /nova
+  user: nova@laravel.com
+  build:
+    - package:discover
+    - asset-publish
+    - create-sqlite-db
+    - db:wipe
+    - migrate:refresh:
+        --seed: true
+  assets:
+    - nova-assets
+  sync:
+    - from: dist
+      to: public/vendor/nova-pennant
+
+purge:
+  directories:
+    - lang/*
